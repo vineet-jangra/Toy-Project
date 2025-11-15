@@ -1,0 +1,47 @@
+MySql
+docker run -d \
+  --name mysql-container \
+  -e MYSQL_ROOT_PASSWORD=rootpassword \
+  -e MYSQL_DATABASE=toy_db \
+  -e MYSQL_USER=user \
+  -e MYSQL_PASSWORD=password \
+  -p 3306:3306 \
+  mysql:8.0
+
+Redis
+docker run -d \
+  --name redis-container \
+  -p 6379:6379 \
+  redis:7.2
+
+Database changed
+mysql> CREATE TABLE Product (
+    ->   id INT AUTO_INCREMENT PRIMARY KEY,
+    ->   name VARCHAR(255),
+    ->   category VARCHAR(255),
+    ->   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ->   price DOUBLE
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE Orders (
+    ->        id INT AUTO_INCREMENT PRIMARY KEY,
+    ->            username VARCHAR(255),
+    ->       address VARCHAR(255),
+    ->        placed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ->        totalAmount DOUBLE,
+    ->         delivery_date_date DATETIME
+    ->
+    ->
+    ->      );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE Orders_Products (
+    ->   order_id INT,
+    ->   product_id INT,
+    ->   product_quantity INT DEFAULT 1,
+    ->   PRIMARY KEY (order_id, product_id),
+    ->   FOREIGN KEY (order_id) REFERENCES Orders(id),
+    ->   FOREIGN KEY (product_id) REFERENCES Product(id)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
